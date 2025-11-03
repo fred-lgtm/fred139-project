@@ -1,0 +1,99 @@
+Metadata-Version: 2.4
+Name: google-workspace-mcp
+Version: 1.0.0
+Summary: MCP server for Google Workspace (Sheets, Drive, Gmail)
+Author-email: Brickface <fred@brickface.com>
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: mcp>=1.0.0
+Requires-Dist: google-auth>=2.23.0
+Requires-Dist: google-auth-oauthlib>=1.1.0
+Requires-Dist: google-auth-httplib2>=0.1.1
+Requires-Dist: google-api-python-client>=2.100.0
+
+# Google Workspace MCP Server
+
+MCP server for accessing Google Workspace APIs (Sheets, Drive, Gmail).
+
+## Setup
+
+1. Install dependencies:
+```bash
+cd integrations/google-workspace-mcp
+pip install -e .
+```
+
+2. Ensure service account has access to your spreadsheets:
+   - Share the spreadsheet with: `google-workspace-access@boxwood-charmer-467423-f0.iam.gserviceaccount.com`
+   - Give "Editor" permissions
+
+3. Configure in MCP settings (already done in config/mcp-servers.json)
+
+## Available Tools
+
+### sheets_read_range
+Read data from a Google Sheets range.
+
+**Parameters:**
+- `spreadsheet_id`: The spreadsheet ID from the URL
+- `range`: A1 notation (e.g., "Sheet1!A1:D10")
+
+### sheets_update_range
+Update data in a Google Sheets range.
+
+**Parameters:**
+- `spreadsheet_id`: The spreadsheet ID
+- `range`: A1 notation
+- `values`: 2D array of values
+
+### sheets_append_row
+Append a new row to a sheet.
+
+**Parameters:**
+- `spreadsheet_id`: The spreadsheet ID
+- `range`: Column range (e.g., "Sheet1!A:D")
+- `values`: Array of values for the row
+
+### sheets_get_info
+Get spreadsheet metadata and sheet names.
+
+**Parameters:**
+- `spreadsheet_id`: The spreadsheet ID
+
+### sheets_batch_update
+Update multiple ranges at once.
+
+**Parameters:**
+- `spreadsheet_id`: The spreadsheet ID
+- `updates`: Array of {range, values} objects
+
+## Example Usage
+
+```python
+# Read data
+await call_tool("sheets_read_range", {
+    "spreadsheet_id": "1GvW7ENDTndx0SxWKBmFCDK5rB9VBurfHpd4puam9Ppk",
+    "range": "Sheet1!A1:F100"
+})
+
+# Update a single cell
+await call_tool("sheets_update_range", {
+    "spreadsheet_id": "1GvW7ENDTndx0SxWKBmFCDK5rB9VBurfHpd4puam9Ppk",
+    "range": "Sheet1!A15",
+    "values": [["Complete"]]
+})
+
+# Update a row
+await call_tool("sheets_update_range", {
+    "spreadsheet_id": "1GvW7ENDTndx0SxWKBmFCDK5rB9VBurfHpd4puam9Ppk",
+    "range": "Sheet1!A15:F15",
+    "values": [["15", "Complete", "2025-10-23", "Row 15 description", "Impact notes", "✅"]]
+})
+```
+
+## Troubleshooting
+
+If you get permission errors:
+1. Check that the service account email has access to the spreadsheet
+2. Verify GOOGLE_SERVICE_ACCOUNT_FILE environment variable points to correct file
+3. Ensure service account has Sheets API enabled in GCP console

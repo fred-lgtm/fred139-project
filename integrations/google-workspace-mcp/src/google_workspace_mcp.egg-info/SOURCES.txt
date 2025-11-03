@@ -1,0 +1,9 @@
+README.md
+pyproject.toml
+src/google_sheets_mcp.py
+src/google_workspace_mcp.egg-info/PKG-INFO
+src/google_workspace_mcp.egg-info/SOURCES.txt
+src/google_workspace_mcp.egg-info/dependency_links.txt
+src/google_workspace_mcp.egg-info/entry_points.txt
+src/google_workspace_mcp.egg-info/requires.txt
+src/google_workspace_mcp.egg-info/top_level.txt
