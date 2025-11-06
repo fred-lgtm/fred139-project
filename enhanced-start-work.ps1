@@ -24,17 +24,17 @@ function Write-Log {
     $LogEntry = "[$Timestamp] [$Level] $Message"
     Add-Content -Path $LogFile -Value $LogEntry
     if ($Verbose -or $Level -eq "ERROR") {
-        Write-Host $LogEntry -ForegroundColor $(if($Level -eq "ERROR") {"Red"} elseif($Level -eq "WARN") {"Yellow"} else {"Green"})
+        Write-Host $LogEntry -ForegroundColor $(if ($Level -eq "ERROR") { "Red" } elseif ($Level -eq "WARN") { "Yellow" } else { "Green" })
     }
 }
 
 # Status tracking
 $Status = @{
-    timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    timestamp      = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
     workspace_root = $WorkspaceRoot
-    checks = @{}
-    errors = @()
-    warnings = @()
+    checks         = @{}
+    errors         = @()
+    warnings       = @()
 }
 
 Write-Log "Brickface Enterprise Auto-Authentication Starting..." "INFO"
@@ -48,11 +48,11 @@ Write-Log "Checking Google Cloud Application Default Credentials..." "INFO"
 
 $ADCPath = "$env:APPDATA\gcloud\application_default_credentials.json"
 $ADCStatus = @{
-    path = $ADCPath
-    exists = $false
-    valid = $false
-    type = $null
-    project = $null
+    path      = $ADCPath
+    exists    = $false
+    valid     = $false
+    type      = $null
+    project   = $null
     client_id = $null
 }
 
@@ -71,15 +71,18 @@ if (Test-Path $ADCPath) {
             $ADCStatus.valid = $true
             $ADCStatus.project = "boxwood-charmer-467423-f0"
             Write-Log "Google Cloud ADC: Valid (OAuth 2.0)" "INFO"
-        } else {
+        }
+        else {
             Write-Log "Google Cloud ADC: Invalid format" "WARN"
             $Status.warnings += "ADC file exists but format is invalid"
         }
-    } catch {
+    }
+    catch {
         Write-Log "Google Cloud ADC: Parse error - $($_.Exception.Message)" "ERROR"
         $Status.errors += "ADC file parse error: $($_.Exception.Message)"
     }
-} else {
+}
+else {
     Write-Log "Google Cloud ADC: Not found" "ERROR"
     $Status.errors += "ADC file not found at $ADCPath"
 }
@@ -93,8 +96,8 @@ $Status.checks.google_cloud_adc = $ADCStatus
 Write-Log "Checking 1Password CLI authentication..." "INFO"
 
 $OpStatus = @{
-    installed = $false
-    authenticated = $false
+    installed        = $false
+    authenticated    = $false
     vault_accessible = $false
 }
 
@@ -118,21 +121,26 @@ try {
                         $OpStatus.vault_accessible = $true
                         Write-Log "1Password CLI: Vault access verified" "INFO"
                     }
-                } catch {
+                }
+                catch {
                     Write-Log "1Password CLI: Vault access failed" "WARN"
                 }
-            } else {
+            }
+            else {
                 Write-Log "1Password CLI: Not authenticated (run: op signin)" "WARN"
                 $Status.warnings += "1Password CLI requires authentication"
             }
-        } catch {
+        }
+        catch {
             Write-Log "1Password CLI: Auth check failed" "WARN"
         }
-    } else {
+    }
+    else {
         Write-Log "1Password CLI: Not installed" "ERROR"
         $Status.errors += "1Password CLI not found in PATH"
     }
-} catch {
+}
+catch {
     Write-Log "1Password CLI: Check failed - $($_.Exception.Message)" "ERROR"
     $Status.errors += "1Password CLI check error: $($_.Exception.Message)"
 }
@@ -146,7 +154,7 @@ $Status.checks.onepassword_cli = $OpStatus
 Write-Log "Configuring Git user..." "INFO"
 
 $GitStatus = @{
-    user_name = $null
+    user_name  = $null
     user_email = $null
     configured = $false
 }
@@ -165,10 +173,12 @@ try {
         $GitStatus.user_name = $GitName
         $GitStatus.configured = $true
         Write-Log "Git: User configured ($GitEmail)" "INFO"
-    } else {
+    }
+    else {
         Write-Log "Git: Configuration verification failed" "WARN"
     }
-} catch {
+}
+catch {
     Write-Log "Git: Configuration failed - $($_.Exception.Message)" "ERROR"
     $Status.errors += "Git configuration error: $($_.Exception.Message)"
 }
@@ -183,8 +193,8 @@ Write-Log "Checking environment file..." "INFO"
 
 $EnvStatus = @{
     template_exists = (Test-Path $EnvTemplate)
-    env_exists = (Test-Path $EnvFile)
-    created = $false
+    env_exists      = (Test-Path $EnvFile)
+    created         = $false
 }
 
 if (-not $EnvStatus.env_exists -and $EnvStatus.template_exists) {
@@ -193,13 +203,16 @@ if (-not $EnvStatus.env_exists -and $EnvStatus.template_exists) {
         $EnvStatus.created = $true
         $EnvStatus.env_exists = $true
         Write-Log "Environment: Created .env from template" "INFO"
-    } catch {
+    }
+    catch {
         Write-Log "Environment: Failed to create .env - $($_.Exception.Message)" "ERROR"
         $Status.errors += "Environment file creation error: $($_.Exception.Message)"
     }
-} elseif ($EnvStatus.env_exists) {
+}
+elseif ($EnvStatus.env_exists) {
     Write-Log "Environment: .env file exists" "INFO"
-} else {
+}
+else {
     Write-Log "Environment: No .env or .env.template found" "WARN"
     $Status.warnings += "No environment files found"
 }
@@ -312,7 +325,61 @@ try {
 $Status.checks.cross_pc_git_sync = $GitSyncStatus
 
 # =============================================================================
-# 6. LOAD 1PASSWORD SECRETS (IF AUTHENTICATED)
+# 7. AUTO-SAVE SERVICE STARTUP
+# =============================================================================
+
+Write-Log "Setting up Auto-Save service..." "INFO"
+
+$AutoSaveStatus = @{
+    integration_setup = $false
+    service_started = $false
+    service_pid = $null
+}
+
+try {
+    # Setup VS Code integration and start auto-save
+    $autoSaveIntegrationScript = Join-Path $WorkspaceRoot "setup-auto-save-integration.ps1"
+    
+    if (Test-Path $autoSaveIntegrationScript) {
+        & $autoSaveIntegrationScript
+        $AutoSaveStatus.integration_setup = $true
+        Write-Log "Auto-Save: VS Code integration configured" "INFO"
+        
+        # Check if service started
+        $pidFile = Join-Path $WorkspaceRoot "auto-save.pid"
+        if (Test-Path $pidFile) {
+            $servicePid = Get-Content $pidFile -ErrorAction SilentlyContinue
+            if ($servicePid -and (Get-Process -Id $servicePid -ErrorAction SilentlyContinue)) {
+                $AutoSaveStatus.service_started = $true
+                $AutoSaveStatus.service_pid = $servicePid
+                Write-Log "Auto-Save: Background service running (PID: $servicePid)" "INFO"
+                $env:BRICKFACE_AUTO_SAVE_STATUS = "RUNNING"
+                $env:BRICKFACE_AUTO_SAVE_PID = $servicePid
+            } else {
+                Write-Log "Auto-Save: Service failed to start" "WARN"
+                $Status.warnings += "Auto-save service failed to start"
+            }
+        } else {
+            Write-Log "Auto-Save: Service not started" "WARN"
+            $Status.warnings += "Auto-save service not started"
+        }
+    } else {
+        Write-Log "Auto-Save: Integration script not found" "WARN"
+        $Status.warnings += "Auto-save integration script missing"
+    }
+} catch {
+    Write-Log "Auto-Save: Setup failed - $($_.Exception.Message)" "ERROR"
+    $Status.errors += "Auto-save setup error: $($_.Exception.Message)"
+}
+
+$Status.checks.auto_save_service = $AutoSaveStatus
+
+# =============================================================================
+# 8. LOAD 1PASSWORD SECRETS (IF AUTHENTICATED)
+# =============================================================================
+
+# =============================================================================
+# 8. LOAD 1PASSWORD SECRETS (IF AUTHENTICATED)
 # =============================================================================
 
 if ($OpStatus.authenticated -and $OpStatus.vault_accessible) {
@@ -340,11 +407,13 @@ if ($OpStatus.authenticated -and $OpStatus.vault_accessible) {
                 Set-Item -Path "env:$($Secret.name)" -Value $Value
                 $SecretStatus.loaded += $Secret.name
                 Write-Log "Secret: Loaded $($Secret.name)" "INFO"
-            } else {
+            }
+            else {
                 $SecretStatus.failed += $Secret.name
                 Write-Log "Secret: Failed to load $($Secret.name)" "WARN"
             }
-        } catch {
+        }
+        catch {
             $SecretStatus.failed += $Secret.name
             Write-Log "Secret: Error loading $($Secret.name)" "WARN"
         }
@@ -354,7 +423,7 @@ if ($OpStatus.authenticated -and $OpStatus.vault_accessible) {
 }
 
 # =============================================================================
-# 7. SAVE STATUS AND SUMMARY
+# 9. SAVE STATUS AND SUMMARY
 # =============================================================================
 
 # Calculate summary
@@ -376,19 +445,20 @@ foreach ($CheckName in $Status.checks.Keys) {
 }
 
 $Status.summary = @{
-    total_checks = $TotalChecks
+    total_checks      = $TotalChecks
     successful_checks = $SuccessfulChecks
-    success_rate = if ($TotalChecks -gt 0) { [math]::Round(($SuccessfulChecks / $TotalChecks) * 100, 1) } else { 0 }
-    error_count = $Status.errors.Count
-    warning_count = $Status.warnings.Count
-    overall_status = if ($Status.errors.Count -eq 0) { "SUCCESS" } elseif ($Status.errors.Count -le 2) { "WARNING" } else { "ERROR" }
+    success_rate      = if ($TotalChecks -gt 0) { [math]::Round(($SuccessfulChecks / $TotalChecks) * 100, 1) } else { 0 }
+    error_count       = $Status.errors.Count
+    warning_count     = $Status.warnings.Count
+    overall_status    = if ($Status.errors.Count -eq 0) { "SUCCESS" } elseif ($Status.errors.Count -le 2) { "WARNING" } else { "ERROR" }
 }
 
 # Save status to JSON
 try {
     $Status | ConvertTo-Json -Depth 10 | Set-Content $StatusFile
     Write-Log "Status: Saved to auth-status.json" "INFO"
-} catch {
+}
+catch {
     Write-Log "Status: Failed to save status file" "ERROR"
 }
 

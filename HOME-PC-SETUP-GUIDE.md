@@ -22,9 +22,18 @@ curl -o "SETUP-HOME-PC-SYNC.ps1" "https://raw.githubusercontent.com/fred-lgtm/fr
 - ✅ Sets up Python environment
 - ✅ Creates Home PC workflow scripts
 - ✅ Creates desktop shortcuts
+- ✅ **Sets up automatic background save service**
+- ✅ **Configures VS Code auto-save integration**
 - ✅ Verifies everything is working
 
-### 3. Daily Workflow - Office to Home
+### 3. Daily Workflow - Fully Automated
+
+**🔄 NEW: Zero-Click Workflow (RECOMMENDED)**
+- **Office PC:** Work normally, changes save automatically every 5 minutes
+- **Home PC:** Work normally, changes save automatically every 5 minutes  
+- **No manual commands needed!** Everything syncs in the background
+
+**📝 Original Manual Workflow (Still Available)**
 
 **On Office PC (End of Day):**
 ```powershell
@@ -112,13 +121,44 @@ C:\Users\[YourName]\fred139-project\
 └── 📊 home-pc-setup-status.json  # Setup verification
 ```
 
-### 7. Desktop Shortcuts Created
+### 7. Auto-Save Service (NEW!)
+
+After setup, you'll have automatic background saving:
+- 🔄 **Auto-Save Service** - Saves changes every 5 minutes automatically
+- 🎯 **VS Code Integration** - Tasks for managing auto-save
+- 📊 **Status Monitoring** - Check auto-save status anytime
+
+**Auto-Save Controls:**
+```powershell
+# Check if auto-save is running
+Test-Path "auto-save.pid"
+
+# View auto-save status
+Get-Content auto-save-status.json | ConvertFrom-Json
+
+# Stop auto-save (if needed)
+.\stop-auto-save.ps1
+
+# Start auto-save manually
+.\auto-save-service.ps1
+```
+
+**Via VS Code:**
+- `Ctrl+Shift+P` → "Tasks: Run Task" → "Auto-Save Status"
+- `Ctrl+Shift+P` → "Tasks: Run Task" → "Stop Auto-Save"
+- `Ctrl+Shift+P` → "Tasks: Run Task" → "Start Auto-Save"
+
+### 8. Desktop Shortcuts Created
+
+### 8. Desktop Shortcuts Created
 
 After setup, you'll have these shortcuts on your desktop:
 - 🚀 **Brickface Start Work (Home)** - Double-click to start working
 - 💾 **Brickface End Work (Home)** - Double-click to save & sync
+- 🔄 **Auto-Save Status** - Check background save service
+- 🛑 **Stop Auto-Save** - Stop background saving (if needed)
 
-### 8. Verification Commands
+### 9. Verification Commands
 
 **Check if everything is working:**
 ```powershell
@@ -133,9 +173,13 @@ ls
 
 # Check environment file
 cat .env.example
+
+# NEW: Check auto-save status
+Test-Path "auto-save.pid"
+Get-Content auto-save-status.json | ConvertFrom-Json
 ```
 
-### 9. Success Indicators
+### 10. Success Indicators
 
 ✅ **Setup is successful when:**
 - Git repository cloned and configured
@@ -143,14 +187,18 @@ cat .env.example
 - `.env` file exists with your credentials
 - Desktop shortcuts work
 - Start/end scripts run without errors
+- **Auto-save service is running (auto-save.pid exists)**
+- **Auto-save status shows "is_running": true**
 - You can see all your Office PC files and folders
 
-### 10. Support
+### 11. Support
 
 **If you need help:**
 1. Check the log file created during setup
 2. Review the setup status: `home-pc-setup-status.json`
 3. Run the verification commands above
 4. Try the manual sync commands if automatic sync fails
+5. **NEW: Check auto-save logs:** `auto-save-YYYY-MM-DD.log`
+6. **NEW: Review auto-save guide:** `AUTO-SAVE-IMPLEMENTATION-GUIDE.md`
 
-**Remember:** This gives you seamless Office ↔ Home PC workflow with zero commands to remember - just double-click the desktop shortcuts!
+**Remember:** This gives you seamless Office ↔ Home PC workflow with **ZERO commands to remember** - changes save automatically in the background!
