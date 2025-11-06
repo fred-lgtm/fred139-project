@@ -1,4 +1,8 @@
 {
-    "stopped":  "2025-11-06 18:51:58",
-    "running":  false
+    "started":  "2025-11-06 18:54:43",
+    "save_count":  0,
+    "clickup_configured":  true,
+    "running":  true,
+    "last_save":  null,
+    "gitkraken_running":  true
 }
