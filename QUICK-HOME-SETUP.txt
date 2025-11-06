@@ -1,0 +1,10 @@
+# 🏠 BRICKFACE ENTERPRISE - HOME PC SETUP (COPY & PASTE)
+# =====================================================
+# Just copy and paste this ENTIRE block into PowerShell on your Home PC:
+
+irm "https://raw.githubusercontent.com/fred-lgtm/fred139-project/main/SETUP-HOME-PC-SYNC.ps1" | iex
+
+# Alternative if above doesn't work:
+# 1. Save the SETUP-HOME-PC-SYNC.ps1 file to a USB drive from your Office PC
+# 2. Copy it to your Home PC 
+# 3. Right-click, "Run with PowerShell"
