@@ -68,7 +68,7 @@ if (-not $SkipAuth) {
     # 1Password CLI Authentication
     Write-Host "🔐 Checking 1Password CLI authentication..." -ForegroundColor Blue
     try {
-        $opStatus = op account list 2>$null
+        op account list 2>$null
         if ($LASTEXITCODE -eq 0) {
             Show-Progress "1Password CLI authenticated"
         } else {
