@@ -30,7 +30,8 @@
       "Bash(git config:*)",
       "Bash(del nul)",
       "Bash(rm:*)",
-      "Bash(op item list:*)"
+      "Bash(op item list:*)",
+      "Bash(node:*)"
     ],
     "deny": [],
     "ask": []
