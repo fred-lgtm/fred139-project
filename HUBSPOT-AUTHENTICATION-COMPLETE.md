@@ -15,7 +15,7 @@ Successfully authenticated HubSpot across all integration points and imported **
 ## Authentication Summary
 
 ### ✓ HubSpot API - OPERATIONAL
-**Token**: `pat-na1-4c42c535-589e-4181-ba6a-df359d4c278d`
+**Token**: Configured in `.env` file
 **Portal ID**: `7141f28d-d92d-44c3-b2f3-c03b711d0942`
 **Status**: Validated and working
 **Test**: Successfully retrieved 15 HubSpot owners
@@ -107,8 +107,8 @@ https://app.hubspot.com/contacts/50101406/deal/48491723536
 ### 1. Project Environment (`.env`)
 ```env
 MCP_HUBSPOT_ENABLED=true
-HUBSPOT_ACCESS_TOKEN=pat-na1-4c42c535-589e-4181-ba6a-df359d4c278d
-HUBSPOT_API_KEY=pat-na1-4c42c535-589e-4181-ba6a-df359d4c278d
+HUBSPOT_ACCESS_TOKEN=<your-hubspot-token>
+HUBSPOT_API_KEY=<your-hubspot-token>
 HUBSPOT_PORTAL_ID=7141f28d-d92d-44c3-b2f3-c03b711d0942
 ```
 
@@ -119,7 +119,7 @@ portals:
   - name: brickface-production
     portalId: 7141f28d-d92d-44c3-b2f3-c03b711d0942
     authType: personalaccesskey
-    personalAccessKey: pat-na1-4c42c535-589e-4181-ba6a-df359d4c278d
+    personalAccessKey: <your-hubspot-token>
 ```
 
 ### 3. Scripts Updated
@@ -259,13 +259,13 @@ During authentication process, the following browser windows were opened:
 
 ### Authentication Flow
 
-1. **Token Provided**: `pat-na1-4c42c535-589e-4181-ba6a-df359d4c278d`
+1. **Token Configuration**: Stored securely in `.env` file
 2. **Validation**: Tested via `/crm/v3/owners` endpoint
 3. **CLI Configuration**: Created `config.yml` in home directory
 4. **Environment Setup**: Updated project `.env` file
-5. **Scripts Updated**: All integration scripts updated with new token
+5. **Scripts Updated**: All integration scripts read from environment variables
 6. **API Testing**: Validated deal creation, task creation
-7. **MCP Server**: Configured with fallback token
+7. **MCP Server**: Configured with fallback token from environment
 
 ### API Rate Limits & Performance
 
@@ -339,7 +339,7 @@ The MCP server provides these tools:
 ### Test HubSpot API
 ```bash
 curl -X GET "https://api.hubapi.com/crm/v3/owners" \
-  -H "Authorization: Bearer pat-na1-4c42c535-589e-4181-ba6a-df359d4c278d"
+  -H "Authorization: Bearer $HUBSPOT_ACCESS_TOKEN"
 ```
 
 ### Import More Deals
