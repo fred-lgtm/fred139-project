@@ -49,7 +49,9 @@
       "Bash(gcloud secrets list:*)",
       "Bash(ENABLE_GOOGLE_APIS.bat)",
       "Bash(code .)",
-      "Bash(gcloud iam service-accounts keys list:*)"
+      "Bash(gcloud iam service-accounts keys list:*)",
+      "Bash(start https://github.com/fred-lgtm/fred139-project/security/secret-scanning/unblock-secret/358e5CW2pfXStqHwAtr3goQcE1a)",
+      "Bash(start https://github.com/fred-lgtm/fred139-project/security/secret-scanning/unblock-secret/358rVJvdO8umlcpTaHNDCTo3K8y)"
     ],
     "deny": [],
     "ask": []
