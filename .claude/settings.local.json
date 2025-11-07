@@ -56,7 +56,9 @@
       "Bash(gcloud iam service-accounts keys create:*)",
       "Bash(start https://github.com/fred-lgtm/fred139-project/security/secret-scanning/unblock-secret/358kPFaqNYCWfP6cUbgmVcwRSSc)",
       "Bash(gcloud iam service-accounts describe:*)",
-      "Bash(start https://github.com/fred-lgtm/fred139-project/security/secret-scanning/unblock-secret/358sFFWEW3P9stIfn0PdPt1e6cz)"
+      "Bash(start https://github.com/fred-lgtm/fred139-project/security/secret-scanning/unblock-secret/358sFFWEW3P9stIfn0PdPt1e6cz)",
+      "Bash(git rm:*)",
+      "Bash(.gitignore)"
     ],
     "deny": [],
     "ask": []

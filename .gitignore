@@ -32,4 +32,4 @@ service-account-key.json
 
 # Temporary files
 *.tmp
-*.temp
+*.tempgoogle-service-account.json
