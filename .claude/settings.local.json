@@ -35,7 +35,8 @@
       "WebFetch(domain:docs.google.com)",
       "Bash(npm install:*)",
       "Bash(set OPENROUTER_API_KEY:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(hs accounts:*)"
     ],
     "deny": [],
     "ask": []
