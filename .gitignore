@@ -38,3 +38,11 @@ service-account-key.json
 gmail-oauth-token.json
 google-service-account.json
 email-audit-results*.json
+
+# Local environment with secrets (never commit)
+.env.local
+.env.*.local
+
+# Downloaded OAuth credentials
+client_secret*.json
+oauth_credentials*.json
