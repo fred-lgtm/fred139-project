@@ -60,7 +60,8 @@
       "Bash(git rm:*)",
       "Bash(.gitignore)",
       "Bash(gcloud config:*)",
-      "Bash(start https://console.cloud.google.com/apis/credentials?project=boxwood-charmer-467423-f0)"
+      "Bash(start https://console.cloud.google.com/apis/credentials?project=boxwood-charmer-467423-f0)",
+      "WebFetch(domain:github.com)"
     ],
     "deny": [],
     "ask": []
