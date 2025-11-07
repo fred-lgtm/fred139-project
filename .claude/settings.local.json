@@ -48,7 +48,8 @@
       "Bash(gcloud config set:*)",
       "Bash(gcloud secrets list:*)",
       "Bash(ENABLE_GOOGLE_APIS.bat)",
-      "Bash(code .)"
+      "Bash(code .)",
+      "Bash(gcloud iam service-accounts keys list:*)"
     ],
     "deny": [],
     "ask": []
