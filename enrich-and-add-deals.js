@@ -2,7 +2,7 @@ const axios = require('axios');
 const fs = require('fs');
 
 // API Credentials
-const HUBSPOT_TOKEN = 'pat-na1-f7742f9c-b5fb-49f2-8bf7-745ac72c8fe2';
+const HUBSPOT_TOKEN = 'pat-na1-4c42c535-589e-4181-ba6a-df359d4c278d';
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY; // Will be passed via env
 
 const hubspotClient = axios.create({

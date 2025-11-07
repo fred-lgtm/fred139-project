@@ -39,7 +39,16 @@
       "Bash(hs accounts:*)",
       "Bash(hs init:*)",
       "Bash(start https://app.hubspot.com/l/settings/90131096188/private-apps)",
-      "Bash(start https://app.hubspot.com/l/settings/access-keys)"
+      "Bash(start https://app.hubspot.com/l/settings/access-keys)",
+      "Bash(Select-String -Pattern \"\"\"name\"\":\")",
+      "Bash(Select-Object -First 30)",
+      "Bash(gcloud config get-value:*)",
+      "Bash(gcloud auth:*)",
+      "Bash(gcloud services list:*)",
+      "Bash(gcloud config set:*)",
+      "Bash(gcloud secrets list:*)",
+      "Bash(ENABLE_GOOGLE_APIS.bat)",
+      "Bash(code .)"
     ],
     "deny": [],
     "ask": []

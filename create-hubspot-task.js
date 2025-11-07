@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const HUBSPOT_TOKEN = 'pat-na1-f7742f9c-b5fb-49f2-8bf7-745ac72c8fe2';
+const HUBSPOT_TOKEN = 'pat-na1-4c42c535-589e-4181-ba6a-df359d4c278d';
 
 const hubspotClient = axios.create({
   baseURL: 'https://api.hubapi.com',
