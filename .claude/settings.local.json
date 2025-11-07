@@ -36,7 +36,8 @@
       "Bash(npm install:*)",
       "Bash(set OPENROUTER_API_KEY:*)",
       "Bash(curl:*)",
-      "Bash(hs accounts:*)"
+      "Bash(hs accounts:*)",
+      "Bash(hs init:*)"
     ],
     "deny": [],
     "ask": []
