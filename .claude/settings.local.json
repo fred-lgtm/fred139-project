@@ -38,7 +38,8 @@
       "Bash(curl:*)",
       "Bash(hs accounts:*)",
       "Bash(hs init:*)",
-      "Bash(start https://app.hubspot.com/l/settings/90131096188/private-apps)"
+      "Bash(start https://app.hubspot.com/l/settings/90131096188/private-apps)",
+      "Bash(start https://app.hubspot.com/l/settings/access-keys)"
     ],
     "deny": [],
     "ask": []
