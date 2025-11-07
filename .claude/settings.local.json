@@ -37,7 +37,8 @@
       "Bash(set OPENROUTER_API_KEY:*)",
       "Bash(curl:*)",
       "Bash(hs accounts:*)",
-      "Bash(hs init:*)"
+      "Bash(hs init:*)",
+      "Bash(start https://app.hubspot.com/l/settings/90131096188/private-apps)"
     ],
     "deny": [],
     "ask": []
