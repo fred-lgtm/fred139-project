@@ -2,10 +2,20 @@ const { google } = require('googleapis');
 const fs = require('fs');
 require('dotenv').config();
 
-// Service account credentials - Load from environment or credentials file
-const SERVICE_ACCOUNT_CREDS = process.env.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS
-  ? JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS)
-  : require('./google-service-account.json'); // Fallback to file (add to .gitignore)
+// Service account credentials - Use working key from other Gmail scripts
+const SERVICE_ACCOUNT_CREDS = {
+  "type": "service_account",
+  "project_id": "boxwood-charmer-467423-f0",
+  "private_key_id": "1ca33ef3f4006f2598c76ddc285c375989cf592f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDxlNwN+t/Yjgvs\njJ9ypihYHBgoUfybbSF93LcPG6Sh1vo8BnnnO7oCgIhybfyqP/5lN0il3gYN0zmi\nbhN10w5hqcPsILYR6Nc98dIabJhJRhhuhDv90ap85CaEwb7KnV36PwHHuUf6A34/\nne7BIgXQsg8K8ONLALF2YUufjgVgjkFWHls4ZJ52f2xKESUK9bAycp9e9bQn2yaP\nASToz8yPB8hpKxogadxONKTxX7pKi6pu4YeSusFVnIHqkuFCZj+Kpqme98uTgK8V\nqKJ0C0iyXRdLgXOF2LdzrUWvkx2cfDlvkFBejskHnffwp1IaFaJEbc3kKac5eGdP\nsFEvz6HPAgMBAAECggEAVGUrpxqgfrfJBJ9vyI6xg251JgjWVbn/PEgSD44Zqow+\nqR+eEKD174/Vmxw/a36lsdhpYcC5nrTO6qbH156e5JF5J5GZ6ZHNOA+11ZNgdCCv\nwlQh3R8VD0JpDnHc5E2rmhPO3GYm9fmobjMPSJtJKso5pRnYXchlNrTwxVHJIRyD\ng3TMQKikLKIQEKlho2TI9Bl9YQ87MUTwD+r+uuaqYkc1LM/+56NM8ChfH0eyn1R1\nNU+erjmHrU0Ivy9DzdyEjMgjEAdQUN9Ytf9No9vYBg0RVHflKYLK3yc6pslQMjOq\n0VpsX4pxi5TNrV18dzH/mOH+VswKDlwqj4BudFQvkQKBgQD70bhOnIP2cpMDgM8K\nwX5SO2RuPTJOurBxLHchsi5tm5JZR/E8Q89CBMfsbPS569WHrS7EuDR+U5EAu7xF\nlOjvohhS2YE0/qtVxhSzLNAFCuFeL9//ceEB9MxuNS10Xf+Mu+vgMR1te6Ac42fL\nFD2PI9mSyYZE6nkONnzER2evqQKBgQD1l6CWamDalgpYc/6TCc4tGnCbIE2Hhjv4\nEqhw+NNtXVRdioUnm5Hz9QjbGCN2otyYE0fBJQNcezXwFBS1zrHk4D2Q0AOsGoi8\n7xqY6SJJQeBL1iV9DVwgJSsLULaDvFMuD19csEeD+pKT4TayKh9tEoonZLj0aZtd\nN4lsuBKQtwKBgAaERuDB7ChUjrloe/MrTrmSD+dKbiLbcfV70RluIwVzITZuRi/p\nEVQEC6hyqWKmV8BLGwq8OZ+LShVaxmSGlgCdkUOTnWRhss1lcuOwJTH8NhjZ5FIY\nAFqsmx2/Ao4gYJyjwFbs7nYG3P3iZK08uNsbcmX6ER93ceqMPm5V6rkBAoGBAIiA\nkGdKFS8pOfLT9ekwCAKVsYTnPXBYMbi+VhUEmC8vMpcTSNMs6sCXryZnkj58YvO7\ns6QsuGOMr/wSjThH/CRkZpO4qnHcBahNlZDr83yYOtyr2AZbiJrtTbFqWSd7Yxg0\nvyI7cGRwv0umX8pDE1iCd3tRxmNC13HGToG5BcidAoGAWjLpRh7FeQAWyXVPiT8O\nNiBpQYjhBwQaOgme9wn1XVeF7bbAJkb4yt/686FbfSC9TpBXLu2+nB/oRDlkIn8r\n8aGblRv8qQ1kOWIksj4sho17UA+p2Tpls60HYf/KP1PLjIbWOQ3qM+LZsr3rZooM\n7TAbgeJ11B40E48//i6GspE=\n-----END PRIVATE KEY-----\n",
+  "client_email": "google-workspace-access@boxwood-charmer-467423-f0.iam.gserviceaccount.com",
+  "client_id": "104951098191722372431",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/google-workspace-access%40boxwood-charmer-467423-f0.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
 
 // Spam/solicitation detection patterns
 const SPAM_PATTERNS = {
