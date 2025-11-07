@@ -1,0 +1,43 @@
+{
+  "activeAgents": [
+    {
+      "name": "code-reviewer",
+      "profile": "code-reviewer-agent.md",
+      "status": "active",
+      "model": "sonnet",
+      "description": "Reviews code for quality, security, and best practices"
+    },
+    {
+      "name": "test-writer",
+      "profile": "test-writer-agent.md",
+      "status": "active",
+      "model": "sonnet",
+      "description": "Creates comprehensive test suites"
+    },
+    {
+      "name": "documentation",
+      "profile": "documentation-agent.md",
+      "status": "active",
+      "model": "haiku",
+      "description": "Generates and maintains documentation"
+    }
+  ],
+  "settings": {
+    "defaultModel": "sonnet",
+    "maxTokens": 100000,
+    "temperature": 0.7,
+    "logLevel": "info"
+  },
+  "escalation": {
+    "humanReviewRequired": [
+      "security-critical",
+      "breaking-changes",
+      "production-deployment"
+    ],
+    "autoApprove": [
+      "documentation-updates",
+      "test-additions",
+      "code-formatting"
+    ]
+  }
+}
