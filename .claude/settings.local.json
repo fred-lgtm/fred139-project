@@ -4,7 +4,8 @@
       "Bash(dir:*)",
       "Bash(powershell -Command \"Get-ChildItem -Path ''c:\\Users\\Frederick\\fred139-project'' -Force | Format-Table Name, PSIsContainer\")",
       "Bash(powershell -Command:*)",
-      "Bash(npm test:*)"
+      "Bash(npm test:*)",
+      "Bash(npm run lint:*)"
     ],
     "deny": [],
     "ask": []
