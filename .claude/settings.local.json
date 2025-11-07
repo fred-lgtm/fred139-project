@@ -63,7 +63,9 @@
       "Bash(start https://console.cloud.google.com/apis/credentials?project=boxwood-charmer-467423-f0)",
       "WebFetch(domain:github.com)",
       "Bash(gcloud --version:*)",
-      "Bash(op:*)"
+      "Bash(op:*)",
+      "Bash(gcloud projects:*)",
+      "Bash(bash:*)"
     ],
     "deny": [],
     "ask": []
