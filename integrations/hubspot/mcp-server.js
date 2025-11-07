@@ -30,7 +30,7 @@ class HubSpotMCPServer {
         this.hubspotClient = axios.create({
             baseURL: 'https://api.hubapi.com',
             headers: {
-                'Authorization': `Bearer ${process.env.HUBSPOT_ACCESS_TOKEN || 'pat-na1-4c42c535-589e-4181-ba6a-df359d4c278d'}`,
+                'Authorization': `Bearer ${process.env.HUBSPOT_ACCESS_TOKEN || process.env.HUBSPOT_API_KEY}`,
                 'Content-Type': 'application/json',
             },
         });
