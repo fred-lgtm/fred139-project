@@ -32,7 +32,8 @@
       "Bash(rm:*)",
       "Bash(op item list:*)",
       "Bash(node:*)",
-      "WebFetch(domain:docs.google.com)"
+      "WebFetch(domain:docs.google.com)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []
