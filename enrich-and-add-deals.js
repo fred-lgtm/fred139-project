@@ -1,8 +1,9 @@
 const axios = require('axios');
 const fs = require('fs');
+require('dotenv').config();
 
 // API Credentials
-const HUBSPOT_TOKEN = 'pat-na1-4c42c535-589e-4181-ba6a-df359d4c278d';
+const HUBSPOT_TOKEN = process.env.HUBSPOT_ACCESS_TOKEN || process.env.HUBSPOT_API_KEY;
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY; // Will be passed via env
 
 const hubspotClient = axios.create({
