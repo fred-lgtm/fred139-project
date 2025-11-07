@@ -59,7 +59,8 @@
       "Bash(start https://github.com/fred-lgtm/fred139-project/security/secret-scanning/unblock-secret/358sFFWEW3P9stIfn0PdPt1e6cz)",
       "Bash(git rm:*)",
       "Bash(.gitignore)",
-      "Bash(gcloud config:*)"
+      "Bash(gcloud config:*)",
+      "Bash(start https://console.cloud.google.com/apis/credentials?project=boxwood-charmer-467423-f0)"
     ],
     "deny": [],
     "ask": []

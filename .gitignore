@@ -32,4 +32,9 @@ service-account-key.json
 
 # Temporary files
 *.tmp
-*.tempgoogle-service-account.json
+*.temp
+
+# Gmail OAuth & Service Account Credentials
+gmail-oauth-token.json
+google-service-account.json
+email-audit-results*.json
