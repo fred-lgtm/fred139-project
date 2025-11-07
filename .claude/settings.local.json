@@ -31,7 +31,8 @@
       "Bash(del nul)",
       "Bash(rm:*)",
       "Bash(op item list:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "WebFetch(domain:docs.google.com)"
     ],
     "deny": [],
     "ask": []
