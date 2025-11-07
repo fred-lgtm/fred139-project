@@ -29,7 +29,8 @@
       "Bash(Select-String -Pattern \"Summary:\" -Context 0,4)",
       "Bash(git config:*)",
       "Bash(del nul)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(op item list:*)"
     ],
     "deny": [],
     "ask": []
