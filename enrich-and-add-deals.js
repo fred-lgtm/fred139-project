@@ -11,6 +11,7 @@ const hubspotClient = axios.create({
     'Authorization': `Bearer ${HUBSPOT_TOKEN}`,
     'Content-Type': 'application/json',
   },
+  timeout: 30000
 });
 
 // Raw deals from PDF analysis
