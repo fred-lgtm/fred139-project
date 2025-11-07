@@ -3,7 +3,11 @@ const fs = require('fs');
 const http = require('http');
 const url = require('url');
 const open = require('open');
+const path = require('path');
+
+// Load environment variables from both .env and .env.local
 require('dotenv').config();
+require('dotenv').config({ path: '.env.local' });
 
 // OAuth 2.0 Client Configuration
 const OAUTH_CONFIG = {
