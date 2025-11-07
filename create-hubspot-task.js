@@ -1,6 +1,7 @@
 const axios = require('axios');
+require('dotenv').config();
 
-const HUBSPOT_TOKEN = 'pat-na1-4c42c535-589e-4181-ba6a-df359d4c278d';
+const HUBSPOT_TOKEN = process.env.HUBSPOT_ACCESS_TOKEN || process.env.HUBSPOT_API_KEY;
 
 const hubspotClient = axios.create({
   baseURL: 'https://api.hubapi.com',
